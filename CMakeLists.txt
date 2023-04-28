@@ -1,25 +1,13 @@
 project(lux-robotic)
 cmake_minimum_required(VERSION 3.10)
 
-find_package(Eigen3    CONFIG REQUIRED)
-find_package(matplot++ CONFIG REQUIRED)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(
-    test_main
-    src/main.cpp
-)
+add_subdirectory(modules)
 
-target_include_directories(
-        test_main
-        PRIVATE
-        include
-)
+set(ENABLE_TEST ON CACHE BOOL "ENABLE TEST")
 
-target_link_libraries(
-        test_main
-        PRIVATE
-        Eigen3::Eigen
-        Matplot++::cimg
-        Matplot++::matplot
-        Matplot++::nodesoup
-)
+if(ENABLE_TEST)
+add_subdirectory(test)
+endif()

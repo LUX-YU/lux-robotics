@@ -6,6 +6,8 @@
 #include <Eigen/LU>
 #include <random>
 
+namespace lux::robotic
+{
 // SDIM: state dimension
 // MDIM: measurement dimension
 // CDIM: control dimension
@@ -30,8 +32,8 @@ public:
         MatrixNxN    state_transform_mat;   // A
         MatrixNxC    control_input_mat;     // B
         MatrixMxN    measurement_function;  // H
-        MatrixNxN    process_noise; // Q noise, Process excitation noise covariance
-        MatrixMxM    measurement_noise; // R noise
+        MatrixNxN    process_noise;         // Q noise, Process excitation noise covariance
+        MatrixMxM    measurement_noise;     // R noise
     };
 
     explicit KalmanFilter(const Description& description,
@@ -57,17 +59,12 @@ public:
         _predict_covariance_matrix = A * _last_estimate_covariance_matrix * A.transpose() + Q;
     }
 
+    // the predict process without control input
     void predict()
     {
-        // 1 predict process
-        // calculate    the prior state estimate vector
-        // A            the state transform matrix
-        // B            the control input matrix
         const auto& A = _description.state_transform_mat;
         _predict_value = A * _last_estimate_state;
 
-        // calculate    the prior covariance matrix
-        // Q            the state transform covariance mat
         const auto& Q = _description.process_noise;
         _predict_covariance_matrix = A * _last_estimate_covariance_matrix * A.transpose() + Q;
     }
@@ -82,9 +79,9 @@ public:
         // x_h_p        the prior state estimate
         // p_h_p        the prior covariance matrix
         const auto& x_h_p   = _predict_value;
-        const auto& p_h_p = _predict_covariance_matrix;
-        const auto& H = _description.measurement_function;
-        const auto& R = _description.measurement_noise;
+        const auto& p_h_p   = _predict_covariance_matrix;
+        const auto& H       = _description.measurement_function;
+        const auto& R       = _description.measurement_noise;
         auto& K = _current_gain;
         K = (p_h_p * H.transpose()) * (H * p_h_p * H.transpose() + R).inverse();
 
@@ -129,3 +126,11 @@ private:
 
     Description     _description;
 };
+
+class ExtendedKalmanFilter
+{
+public:
+
+};
+
+}
