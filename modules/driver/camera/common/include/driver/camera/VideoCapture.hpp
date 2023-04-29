@@ -3,7 +3,7 @@
 #include <opencv2/opencv.hpp>
 #include <visibility_control.h>
 
-namespace lux::robotic
+namespace lux::robotics
 {
     class VideoCapture
     {
@@ -12,14 +12,13 @@ namespace lux::robotic
 
         virtual bool grab() = 0;
 
-        virtual bool retrieve(cv::Mat&, int extra_parameter = 0) = 0;
-
-        virtual bool isOpened() const = 0;
+        virtual bool retrieve(cv::Mat&, int extra_parameter) = 0;
 
         virtual VideoCapture& operator>>(cv::Mat& mat)
         {
             cv::VideoCapture vc;
-            retrieve(mat);
+            grab();
+            retrieve(mat, 0);
             return *this;
         }
     };
@@ -28,7 +27,7 @@ namespace lux::robotic
     {
     public:
         template<typename... T>
-        CVVideoCapture(T&&... args)
+        explicit CVVideoCapture(T&&... args)
         : _capture(std::forward<T>(args)...){}
 
         bool grab() override
@@ -41,9 +40,14 @@ namespace lux::robotic
             return _capture.retrieve(mat, extra_parameter);
         }
 
-        bool isOpened() const override
+        [[nodiscard]] bool isOpened() const
         {
             return _capture.isOpened();
+        }
+
+        VideoCapture& operator>>(cv::Mat& mat) override
+        {
+            _capture >> mat;
         }
 
     private:

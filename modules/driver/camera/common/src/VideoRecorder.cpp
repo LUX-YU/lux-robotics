@@ -1,6 +1,6 @@
-#include "driver/camera/common/VideoRecorder.hpp"
+#include "driver/camera/VideoRecorder.hpp"
 
-namespace lux::robotic
+namespace lux::robotics
 {
     SyncVideoRecorder::SyncVideoRecorder(std::filesystem::path record_path)
     : _record_path(std::move(record_path))

@@ -1,11 +1,11 @@
 #pragma once
-#include "driver/camera/common/BinocularCamera.hpp"
-#include "driver/camera/common/VideoCapture.hpp"
+#include "driver/camera/BinocularCamera.hpp"
+#include "driver/camera/VideoCapture.hpp"
 #include <visibility_control.h>
 #include <sl/Camera.hpp> // ZED include
 #include <memory>
 
-namespace lux::robotic
+namespace lux::robotics
 {
     enum class ZEDView
     {
@@ -13,7 +13,7 @@ namespace lux::robotic
         RIGHT
     };
 
-    class ZEDCamera : public BinocularCamera, public SharedHelp<ZEDCamera>
+    class ZEDCamera : public BinocularCamera, public MakePTRHelper<ZEDCamera>
     {
         friend class ZEDVideoCapture;
     public:
@@ -40,17 +40,17 @@ namespace lux::robotic
         mutable sl::Camera  _camera;
     };
 
-    class ZEDVideoCapture : public VideoCapture, public SharedHelp<ZEDVideoCapture>
+    class ZEDVideoCapture : public VideoCapture, public MakePTRHelper<ZEDVideoCapture>
     {
     public:
         LUX_EXPORT explicit ZEDVideoCapture(std::shared_ptr<ZEDCamera> camera, ZEDView view);
+
+        LUX_EXPORT ~ZEDVideoCapture();
 
         // The function `grab()` will grab two camera image, no matter the parameter passed to the constructor.
         LUX_EXPORT bool grab() override;
 
         LUX_EXPORT bool retrieve(cv::Mat&, int extra_parameter = 0) override;
-
-        LUX_EXPORT bool isOpened() const override;
 
         LUX_EXPORT ZEDView view() const;
 

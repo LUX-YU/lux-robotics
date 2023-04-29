@@ -1,5 +1,15 @@
-find_package(ZED 3 REQUIRED)
+find_package(ZED 3)
+if(NOT ZED_FOUND)
+    message(FATAL_ERROR "ZED SDK not found, skip the build of zed")
+    return()
+endif()
+
 find_package(CUDA ${ZED_CUDA_VERSION} REQUIRED)
+
+if(NOT CUDA_FOUND)
+    message(FATAL_ERROR "CUDA not found, skip the build of zed")
+    return()
+endif()
 
 set(ZED_LINK_SHARED_ZED ON CACHE BOOL "Link with the ZED SDK shared executable")
 

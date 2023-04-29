@@ -1,7 +1,7 @@
 #pragma once
 #include "CameraBase.hpp"
 
-namespace lux::robotic
+namespace lux::robotics
 {
     class BinocularCamera : public CameraBase
     {

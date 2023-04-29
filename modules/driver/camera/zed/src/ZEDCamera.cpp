@@ -1,6 +1,6 @@
-#include "driver/camera/zed/ZEDCamera.hpp"
+#include "driver/camera/ZEDCamera.hpp"
 
-namespace lux::robotic
+namespace lux::robotics
 {
     ZEDCamera::ZEDCamera(const sl::InitParameters& parameter)
     : _init_parameters(parameter), _is_busy(false)
@@ -52,6 +52,11 @@ namespace lux::robotic
         _camera_wrapper->_is_busy = true;
     }
 
+    ZEDVideoCapture::~ZEDVideoCapture()
+    {
+        _camera_wrapper->_is_busy = false;
+    }
+
     bool ZEDVideoCapture::grab()
     {
         return _camera_wrapper->_camera.grab() == sl::ERROR_CODE::SUCCESS;
@@ -72,11 +77,6 @@ namespace lux::robotic
         );
 
         return true;
-    }
-
-    bool ZEDVideoCapture::isOpened() const
-    {
-        return _camera_wrapper->_camera.isOpened();
     }
 
     ZEDView ZEDVideoCapture::view() const

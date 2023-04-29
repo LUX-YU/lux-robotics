@@ -19,7 +19,7 @@ int main()
     std::normal_distribution<double> normal_distribution(-0.37727, 0.1);
 
     // initialize kalman filter
-    using Filter = lux::robotic::KalmanFilter<double, 1, 1, 1>;
+    using Filter = lux::robotics::KalmanFilter<double, 1, 1, 1>;
     Filter::Description filter_description;
     filter_description.process_noise        = Filter::MatrixNxN{1e-5};
     filter_description.measurement_noise    = Filter::MatrixMxM{0.01};

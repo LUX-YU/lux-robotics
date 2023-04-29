@@ -4,7 +4,7 @@
 #include <memory>
 #include <opencv2/opencv.hpp>
 
-namespace lux::robotic
+namespace lux::robotics
 {
     template<typename T>
     class MakePTRHelper
@@ -40,8 +40,8 @@ namespace lux::robotic
         // may be block
         virtual bool close() = 0;
 
-        virtual bool isOpened() const = 0;
+        [[nodiscard]] virtual bool isOpened() const = 0;
 
-        virtual bool isBusy() const = 0;
+        [[nodiscard]] virtual bool isBusy() const = 0;
     };
 } // namespace lux::robotic

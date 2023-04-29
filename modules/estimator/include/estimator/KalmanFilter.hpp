@@ -6,7 +6,7 @@
 #include <Eigen/LU>
 #include <random>
 
-namespace lux::robotic
+namespace lux::robotics
 {
 // SDIM: state dimension
 // MDIM: measurement dimension

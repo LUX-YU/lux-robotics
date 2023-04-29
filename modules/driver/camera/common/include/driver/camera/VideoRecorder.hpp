@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <visibility_control.h>
 
-namespace lux::robotic
+namespace lux::robotics
 {
     class SyncVideoRecorder
     {

@@ -1,9 +1,9 @@
-#include <driver/camera/zed/ZEDCamera.hpp>
+#include <driver/camera/ZEDCamera.hpp>
 #include <iostream>
 
 int main()
 {
-    using namespace lux::robotic;
+    using namespace lux::robotics;
 
     sl::InitParameters parameter;
     parameter.camera_fps = 15;
