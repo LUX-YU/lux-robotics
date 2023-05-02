@@ -6,6 +6,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
+
 if(IOS)
   set(CMAKE_OSX_DEPLOYMENT_TARGET "14.0" CACHE STRING "Minimum iOS deployment version" FORCE)
 elseif(APPLE)
@@ -18,7 +20,12 @@ find_package(ArcGISRuntime 200.1.0 COMPONENTS REQUIRED Cpp)
 set(SOURCE_FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/MapViewer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/BaseScene.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/MainWindow.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/MainWindow.h
   ${CMAKE_CURRENT_SOURCE_DIR}/include/MapViewer.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/BaseScene.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/ui/MainWindow.ui
 )
 
 qt_add_executable(MapViewer ${SOURCE_FILES})
@@ -40,6 +47,8 @@ target_include_directories(
 target_link_libraries(
 	MapViewer 
 	PRIVATE
+	gps_replay
+	dataset_kitti
 	ArcGISRuntime::Cpp
 	Qt6::Core
 	Qt6::Widgets

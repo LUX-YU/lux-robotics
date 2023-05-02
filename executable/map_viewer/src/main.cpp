@@ -25,6 +25,7 @@
 #include <QQmlApplicationEngine>
 
 #include "MapViewer.h"
+#include "MainWindow.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -79,11 +80,8 @@ int main(int argc, char *argv[])
     //    application.quit();
     //    return 1;
     //  }
-
-    MapViewer applicationWindow;
-    applicationWindow.setMinimumWidth(800);
-    applicationWindow.setMinimumHeight(600);
-    applicationWindow.show();
+    MainWindow main_window;
+    main_window.show();
 
     return application.exec();
 }

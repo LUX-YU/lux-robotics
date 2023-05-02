@@ -40,30 +40,28 @@
 
 #include <QUrl>
 
-using namespace Esri::ArcGISRuntime;
-
-MapViewer::MapViewer(QWidget* parent /*=nullptr*/):
-    QMainWindow(parent)
+MapViewer::MapViewer(QUrl server_url, QWidget* parent /*=nullptr*/):
+    QMainWindow(parent), _server_url(std::move(server_url))
 {
+    using namespace Esri::ArcGISRuntime;
     // Create a scene using the ArcGISStreets BasemapStyle
-    Scene* scene = new Scene(BasemapStyle::ArcGISImagery, this);
+    _scene = new Scene(BasemapStyle::ArcGISImagery, this);
 
     // create a new elevation source from Terrain3D rest service
-    ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+    ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(_server_url, this);
 
     // add the elevation source to the scene to display elevation
-    scene->baseSurface()->elevationSources()->append(elevationSource);
+    _scene->baseSurface()->elevationSources()->append(elevationSource);
 
     // Create a scene view, and pass in the scene
-    m_sceneView = new SceneGraphicsView(scene, this);
+    _scene_view = new SceneGraphicsView(_scene, this);
 
     GraphicsOverlay* overlay = new GraphicsOverlay(this);
     // createGraphics(overlay);
     // Create a point
     const Point dume_beach(-118.80657463861, 34.0005930608889, SpatialReference::wgs84());
     // Create symbols for the point
-    SimpleLineSymbol* point_outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 3, this);
+    SimpleLineSymbol* point_outline  = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 3, this);
     SimpleMarkerSymbol* point_symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10, this);
     point_symbol->setOutline(point_outline);
 
@@ -72,13 +70,15 @@ MapViewer::MapViewer(QWidget* parent /*=nullptr*/):
     // Add point graphic to the graphics overlay
     overlay->graphics()->append(point_graphic);
 
-    m_sceneView->graphicsOverlays()->append(overlay);
+    _scene_view->graphicsOverlays()->append(overlay);
 
     // set the sceneView as the central widget
-    setCentralWidget(m_sceneView);
+    setCentralWidget(_scene_view);
 }
 
 // destructor
 MapViewer::~MapViewer()
 {
 }
+
+
