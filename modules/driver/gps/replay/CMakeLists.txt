@@ -1,17 +1,18 @@
 add_library(
-	gps_fake
+	gps_replay
 	SHARED
-	${CMAKE_CURRENT_SOURCE_DIR}/src/FakeGPS.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/ReplayGPS.cpp
 )
 
 target_include_directories(
-	gps_fake
+	gps_replay
 	PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_link_libraries(
-	gps_fake
+	gps_replay
 	PUBLIC
 	system
+	gps_common
 )

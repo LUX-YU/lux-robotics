@@ -1,1 +1,2 @@
-add_subdirectory(fake_gps)
+add_subdirectory(common)
+add_subdirectory(replay)

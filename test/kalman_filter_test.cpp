@@ -3,6 +3,7 @@
 //
 #include "estimator/KalmanFilter.hpp"
 #include "matplot/matplot.h"
+#include <random>
 
 int main()
 {

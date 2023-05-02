@@ -52,5 +52,25 @@ target_link_libraries(
     virtual_camera_test
     PUBLIC
     camera_virtual
-    dataset_support_kitti
+)
+
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+add_executable(
+    replay_gps_test
+    replay_gps_test.cpp
+)
+
+target_link_libraries(
+    replay_gps_test
+    PUBLIC
+    gps_replay
+    dataset_kitti
+    Matplot++::cimg
+    Matplot++::matplot
+    Matplot++::nodesoup
+    Qt6::Widgets
 )
