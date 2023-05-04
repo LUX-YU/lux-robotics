@@ -78,7 +78,7 @@ namespace lux::robotics::ros
             delete[] _raw.value_data;
     }
 
-    bool searchRecordHeader(const RosbagRawRecord& record, SearchCallback callback)
+    bool searchRecordHeader(const RosbagRawRecord& record, SearchCallback callback, void* user_data)
     {
         uint32_t cur = 0;
         auto header_data = record.header_data;
@@ -104,7 +104,8 @@ namespace lux::robotics::ros
                 name_start,
                 name_len,
                 reinterpret_cast<const uint8_t*>(value_start),
-                data_len
+                data_len,
+                user_data
             );
 
             cur = cur + 4 + field_len;
@@ -112,9 +113,9 @@ namespace lux::robotics::ros
         return true;
     }
 
-    bool Record::searchHeader(SearchCallback callback)
+    bool Record::searchHeader(SearchCallback callback, void* user_data)
     {
-        return searchRecordHeader(_raw, callback);
+        return searchRecordHeader(_raw, callback, user_data);
     }
 
     /* Rosbag implement */
