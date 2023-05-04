@@ -1,8 +1,9 @@
 #include <driver/gps/ReplayGPS.hpp>
 #include <dataset/KITTI.hpp>
 #include <matplot/matplot.h>
-
-
+#include <fstream>
+#include <string>
+#include <string_view>
 
 int main(int argc, char* argv[])
 {
