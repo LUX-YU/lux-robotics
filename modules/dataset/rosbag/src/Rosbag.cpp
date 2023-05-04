@@ -1,5 +1,6 @@
 #include <dataset/Rosbag.hpp>
 #include <memory>
+#include <iostream>
 
 namespace lux::robotics::ros
 {
@@ -213,7 +214,7 @@ namespace lux::robotics::ros
 
         _ifs.read(reinterpret_cast<char*>(&raw_record.value_len), 4);
         raw_record.value_data = new char[raw_record.value_len];
-        _ifs.read(reinterpret_cast<char*>(raw_record.value_data), raw_record.header_len);
+        _ifs.read(reinterpret_cast<char*>(raw_record.value_data), raw_record.value_len);
     }
 
     void Rosbag::init()
