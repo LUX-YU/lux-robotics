@@ -83,7 +83,7 @@ namespace lux::robotics::ros
         auto header_data = record.header_data;
         while (cur < record.header_len)
         {
-            auto field_start = header_data[cur];
+            auto field_start = &header_data[cur];
             auto field_len = *reinterpret_cast<uint32_t*>(field_start);
             char* name_start = &header_data[cur + 4];
 
@@ -118,7 +118,7 @@ namespace lux::robotics::ros
 
     /* Rosbag implement */
 	Rosbag::Rosbag(std::filesystem::path path)
-	: _save_path(std::move(path)), _ifs(_save_path, std::ios::binary)
+	: _save_path(std::move(path)), _ifs(_save_path, std::ios::binary | std::ios::in)
 	{
         rosbagFromFile();
         _record_start = _ifs.tellg();

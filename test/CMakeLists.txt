@@ -68,3 +68,14 @@ target_link_libraries(
     Matplot++::matplot
     Matplot++::nodesoup
 )
+
+add_executable(
+    rosbag_load_test
+    rosbag_load_test.cpp
+)
+
+target_link_libraries(
+    rosbag_load_test
+    PUBLIC
+    dataset_rosbag
+)
