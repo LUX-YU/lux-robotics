@@ -61,6 +61,8 @@ namespace lux::robotics::ros
 
         [[nodiscard]] LUX_EXPORT bool is_open() const;
 
+        [[nodiscard]] LUX_EXPORT bool eof() const;
+
         [[nodiscard]] LUX_EXPORT RosbagVersion version() const;
 
         LUX_EXPORT void init();

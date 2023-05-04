@@ -72,9 +72,9 @@ namespace lux::robotics::ros
 
     Record::~Record()
     {
-        if (_raw.header_data)
+        if (_raw.header_len > 0)
             delete[] _raw.header_data;
-        if (_raw.value_data)
+        if (_raw.value_len > 0)
             delete[] _raw.value_data;
     }
 
@@ -135,6 +135,11 @@ namespace lux::robotics::ros
     bool Rosbag::is_open() const
     {
         return _ifs.is_open();
+    }
+
+    bool Rosbag::eof() const
+    {
+        return _ifs.eof();
     }
 
     RosbagVersion Rosbag::version() const

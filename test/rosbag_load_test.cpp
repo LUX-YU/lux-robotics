@@ -5,6 +5,7 @@
 void search_method(const char* name, size_t name_len, const uint8_t* data, size_t data_len)
 {
     std::cout << "name:" << std::string_view(name, name_len) << " data:";
+    std::cout << "0X";
     for (size_t i = 0; i < data_len; i++)
     {
         std::cout << std::hex << std::uppercase << (int)data[i];
@@ -21,23 +22,16 @@ int main(int argc, char* argv[])
     
     RosbagVersion version = rosbag.version();
 
-    auto record = rosbag.nextRecord();
+    Record record;
+    size_t max_count = 50;
 
-    record.searchHeader(search_method);
+    for(size_t i = 0; !rosbag.eof() && i < max_count ; i++)
+    {
+        record = rosbag.nextRecord();
+        record.searchHeader(search_method);
 
-    record = rosbag.nextRecord();
-    record.searchHeader(search_method);
+        std::cout << std::endl;
+    }
 
-    record = rosbag.nextRecord();
-    record.searchHeader(search_method);
-
-    record = rosbag.nextRecord();
-    record.searchHeader(search_method);
-
-    record = rosbag.nextRecord();
-    record.searchHeader(search_method);
-
-    record = rosbag.nextRecord();
-    record.searchHeader(search_method);
     return 0;
 }
