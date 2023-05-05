@@ -4,120 +4,6 @@
 
 namespace lux::robotics::ros
 {
-    /* Record Wrapper */
-    Record::Record(const Record& other)
-    {
-        _raw.header_len = other._raw.header_len;
-        _raw.value_len = other._raw.value_len;
-        _raw.header_data = new char[_raw.header_len];
-        _raw.value_data = new char[_raw.value_len];
-        std::memcpy(_raw.header_data, other._raw.header_data, _raw.header_len);
-        std::memcpy(_raw.value_data, other._raw.value_data, _raw.value_len);
-    }
-
-    Record& Record::operator=(const Record& other)
-    {
-        release();
-        _raw.header_len = other._raw.header_len;
-        _raw.value_len = other._raw.value_len;
-        _raw.header_data = new char[_raw.header_len];
-        _raw.value_data = new char[_raw.value_len];
-        std::memcpy(_raw.header_data, other._raw.header_data, _raw.header_len);
-        std::memcpy(_raw.value_data, other._raw.value_data, _raw.value_len);
-        return *this;
-    }
-
-    Record::Record(Record&& other) noexcept
-    {
-        _raw = other._raw;
-        other._raw.header_len = 0;
-        other._raw.value_len = 0;
-    }
-
-    Record& Record::operator=(Record&& other) noexcept
-    {
-        release();
-        _raw = other._raw;
-        other._raw.header_len = 0;
-        other._raw.value_len = 0;
-        return *this;
-    }
-
-    Record::Record()
-    {
-        _raw.header_data = nullptr;
-        _raw.value_data = nullptr;
-        _raw.header_len = 0;
-        _raw.value_len = 0;
-    }
-
-    void Record::release()
-    {
-        if (_raw.header_len > 0)
-        {
-            delete[] _raw.header_data;
-            _raw.header_data = nullptr;
-        }
-        if (_raw.value_len > 0)
-        {
-            delete[] _raw.value_data;
-            _raw.value_data = nullptr;
-        }
-    }
-
-    Record::Record(const RosbagRawRecord& raw)
-    {
-        _raw = raw;
-    }
-
-    Record::~Record()
-    {
-        if (_raw.header_len > 0)
-            delete[] _raw.header_data;
-        if (_raw.value_len > 0)
-            delete[] _raw.value_data;
-    }
-
-    bool searchRecordHeader(const RosbagRawRecord& record, SearchCallback callback, void* user_data)
-    {
-        uint32_t cur = 0;
-        auto header_data = record.header_data;
-        while (cur < record.header_len)
-        {
-            auto field_start = &header_data[cur];
-            auto field_len = *reinterpret_cast<uint32_t*>(field_start);
-            char* name_start = &header_data[cur + 4];
-
-            uint32_t i = 0;
-            for (i = 0; i < field_len; i++)
-            {
-                if (name_start[i] == '=') break;
-            }
-            if (i == field_len)
-            {
-                return false;
-            }
-            uint32_t name_len = i;
-            uint32_t data_len = field_len - name_len - 1;
-            const char* value_start = (&name_start[name_len] + 1);
-            callback(
-                name_start,
-                name_len,
-                reinterpret_cast<const uint8_t*>(value_start),
-                data_len,
-                user_data
-            );
-
-            cur = cur + 4 + field_len;
-        }
-        return true;
-    }
-
-    bool Record::searchHeader(SearchCallback callback, void* user_data)
-    {
-        return searchRecordHeader(_raw, callback, user_data);
-    }
-
     /* Rosbag implement */
 	Rosbag::Rosbag(std::filesystem::path path)
 	: _save_path(std::move(path)), _ifs(_save_path, std::ios::binary | std::ios::in)
@@ -186,17 +72,9 @@ namespace lux::robotics::ros
         _ifs.close();
     }
 
-    static void raw_record_deleter(RosbagRawRecord* data)
-    {
-        if (data == nullptr) return;
-        if (data->header_data) delete[] data->header_data;
-        if (data->value_data) delete[] data->value_data;
-        delete data;
-    }
-
     Record Rosbag::nextRecord()
     {
-        if (!is_open() || _ifs.eof() || _version == RosbagVersion::UNKNOWN)
+        if (_ifs.eof() || _version == RosbagVersion::UNKNOWN)
         {
             return Record{};
         }
@@ -208,7 +86,7 @@ namespace lux::robotics::ros
 
     bool Rosbag::nextRawRecord(RosbagRawRecord& raw_record)
     {
-        return (is_open() || _ifs.eof() || _version == RosbagVersion::UNKNOWN) 
+        return (_ifs.eof() || _version == RosbagVersion::UNKNOWN) 
             ? (readRawRecord(raw_record), true) : false;
     }
 
