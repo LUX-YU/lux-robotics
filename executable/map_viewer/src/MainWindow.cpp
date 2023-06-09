@@ -28,7 +28,7 @@
 #include "QFileDialog"
 
 // dataset parser
-#include "dataset/KITTI.hpp"
+#include <lux/dataset/KITTI.hpp>
 
 MainWindow::MainWindow(QWidget* parent)
 : QMainWindow(parent), _ui(new Ui::MainWindow{})
@@ -57,11 +57,10 @@ void MainWindow::initialize_connection()
 	using namespace ::lux::robotics;
 	using namespace ::Esri::ArcGISRuntime;
 
-	connect(
-		_ui->pushButton, 
-		&QPushButton::clicked,
+	connect(_ui->pushButton, &QPushButton::clicked,
 		[this](bool checked) {
 			auto file_name = QFileDialog::getExistingDirectory(this);
+			if (file_name.isEmpty()) return;
 			lux::robotics::OXTSLoader loader(std::filesystem::path{ file_name.toStdString() });
 			
 			if (!loader.isOpened())

@@ -10,20 +10,28 @@ int main(int argc, char* argv[])
     using namespace ::lux::robotics::ros;
 
     Rosbag rosbag("F:\\Resource\\DataSet\\SLAM\\The EuRoC MAV Dataset\\V1_01_easy\\V1_01_easy.bag");
+    std::cout << "Bag Size:" << rosbag.bagSize() << std::endl;
     
+    {
+        auto topic_views = rosbag.sTopicView();
+        for (auto topic_view : topic_views)
+        {
+            std::cout << topic_view << std::endl;
+        }
+    }
+
     RosbagVersion version = rosbag.version();
 
-    Record record;
-    size_t max_count = 100;
-
     auto start_time = std::chrono::system_clock::now();
-    for(size_t i = 0; !rosbag.eof() && i < max_count ; i++)
+    BinaryMessageView msg_view;
+    size_t i;
+    for(i = 0; !rosbag.eof(); i++)
     {
-        record = rosbag.nextRecord();
-        record_print(record);
+        auto message = rosbag.nextBinaryMessageView(msg_view);
     }
     auto end_time = std::chrono::system_clock::now();
-    std::cout << std::dec << "Spend time:" << std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count() << std::endl;
+    double time = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count() / 1e6f;
+    std::cout << std::dec << std::fixed << "Load:" << i << " Count, Spend time:" << time << std::endl;
 
     return 0;
 }
@@ -47,7 +55,7 @@ void record_print(::lux::robotics::ros::Record& record)
         const auto& data = record.view<RecordEnum::MESSAGE_DATA>();
         std::cout << "Message Data:" << std::endl;
         std::cout << "conn:" << data.conn << std::endl;
-        std::cout << "time:" << data.time << std::endl;
+        std::cout << "time:" << data.second << std::endl;
         break;
     }
     case RecordEnum::BAG_HEADER:
@@ -72,9 +80,9 @@ void record_print(::lux::robotics::ros::Record& record)
         const auto& data = record.view<RecordEnum::CHUNK_INFO>();
         std::cout << "Chunk Info:" << std::endl;
         std::cout << "chunk_pos:" << data.chunk_pos << std::endl;
-        std::cout << "count:" << data.count << std::endl;
-        std::cout << "end_time:" << data.end_time << std::endl;
-        std::cout << "start_time:" << data.start_time << std::endl;
+        std::cout << "conn_count:" << data.conn_count << std::endl;
+        std::cout << "end_time:" << data.end_time_second << std::endl;
+        std::cout << "start_time:" << data.start_time_second << std::endl;
         std::cout << "ver:" << data.ver << std::endl;
         break;
     }

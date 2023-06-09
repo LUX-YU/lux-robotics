@@ -2,7 +2,10 @@
 /.vcpkg
 /.vscode
 /.vs
-/out
+ # visual studio cmake config file
+/CMakeSettings.json
+# visual studio default cmake binary directory
+/out 
 /build
 /cmake-build-debug
 /cmake-build-release
