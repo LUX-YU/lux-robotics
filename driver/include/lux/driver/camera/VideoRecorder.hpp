@@ -1,17 +1,17 @@
 #pragma once
 #include <filesystem>
-#include <lux/cxx/visibility_control.h>
+#include <lux/robotics/visibility.h>
 
 namespace lux::robotics
 {
     class SyncVideoRecorder
     {
     public:
-        LUX_EXPORT SyncVideoRecorder( 
+        LUX_ROBOTICS_PUBLIC SyncVideoRecorder(
             std::filesystem::path record_path
         );
 
-        LUX_EXPORT virtual bool recordLoop();
+        LUX_ROBOTICS_PUBLIC virtual bool recordLoop();
 
     private:
         std::filesystem::path           _record_path;

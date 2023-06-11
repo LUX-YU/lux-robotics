@@ -2,13 +2,13 @@
 #include <opencv2/features2d/features2d.hpp>
 #include <lux/robotics/visibility.h>
 
-using KeyPointList	= std::vector<cv::KeyPoint>;
-using DMatchList	= std::vector<cv::DMatch>;
+using KeyPointList = std::vector<cv::KeyPoint>;
+using DMatchList = std::vector<cv::DMatch>;
 
-class CVFeatureMatcher
+class FeatureMatcher
 {
 public:
-	LUX_ROBOTICS_PUBLIC CVFeatureMatcher(cv::Ptr<cv::FeatureDetector> detector, cv::Ptr<cv::DescriptorMatcher> matcher);
+	LUX_ROBOTICS_PUBLIC FeatureMatcher(cv::Ptr<cv::FeatureDetector> detector, cv::Ptr<cv::DescriptorMatcher> matcher);
 
 	LUX_ROBOTICS_PUBLIC void setMinimumLimit(double);
 

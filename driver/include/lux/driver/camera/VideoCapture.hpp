@@ -1,14 +1,14 @@
 #pragma once
 #include <memory>
 #include <opencv2/opencv.hpp>
-#include <lux/cxx/visibility_control.h>
+#include <lux/robotics/visibility.h>
 
 namespace lux::robotics
 {
     class VideoCapture
     {
     public:
-        LUX_EXPORT virtual ~VideoCapture() = default;
+        LUX_ROBOTICS_PUBLIC virtual ~VideoCapture() = default;
 
         virtual bool grab() = 0;
 

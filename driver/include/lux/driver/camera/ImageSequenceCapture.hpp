@@ -4,7 +4,7 @@
 
 #pragma once
 #include <lux/driver/camera/VideoCapture.hpp>
-#include <lux/cxx/visibility_control.h>
+#include <lux/robotics/visibility.h>
 #include "ImageSequence.hpp"
 
 namespace lux::robotics
@@ -12,15 +12,15 @@ namespace lux::robotics
     class ImageSequenceCapture : public VideoCapture, public MakePTRHelper<ImageSequenceCapture>
     {
     public:
-        LUX_EXPORT explicit ImageSequenceCapture(std::shared_ptr<ImageSequence>, size_t buffer_size = 10);
+        LUX_ROBOTICS_PUBLIC explicit ImageSequenceCapture(std::shared_ptr<ImageSequence>, size_t buffer_size = 10);
 
-        LUX_EXPORT ~ImageSequenceCapture() override;
+        LUX_ROBOTICS_PUBLIC ~ImageSequenceCapture() override;
 
-        LUX_EXPORT bool grab() override;
+        LUX_ROBOTICS_PUBLIC bool grab() override;
 
-        LUX_EXPORT void reset();
+        LUX_ROBOTICS_PUBLIC void reset();
 
-        LUX_EXPORT bool retrieve(cv::Mat&, int extra_parameter = 0) override;
+        LUX_ROBOTICS_PUBLIC bool retrieve(cv::Mat&, int extra_parameter = 0) override;
 
     private:
         class Impl;
