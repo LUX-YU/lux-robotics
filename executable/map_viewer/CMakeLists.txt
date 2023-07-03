@@ -16,7 +16,7 @@ endif()
 
 find_package(Qt6 COMPONENTS REQUIRED Core Widgets Multimedia Positioning Sensors OpenGLWidgets WebSockets Qml Quick)
 find_package(ArcGISRuntime 200.1.0 COMPONENTS REQUIRED Cpp)
-find_package(lux-dataset	REQUIRED COMPONENTS visibility kitti)
+find_package(lux-dataset	REQUIRED COMPONENTS kitti)
 
 set(SOURCE_FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
