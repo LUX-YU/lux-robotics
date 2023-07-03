@@ -9,7 +9,7 @@
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "cmakeCommandArgs": "-DCMAKE_PREFIX_PATH=D:/CodeBase/lux-install -DENABLE_TEST=OFF"
+      "cmakeCommandArgs": "-DCMAKE_PREFIX_PATH=D:/DevResources/LuxProjects/lux-installed -DCMAKE_INSTALL_PREFIX=D:/DevResources/LuxProjects/lux-installed"
     },
     {
       "name": "x64-Release",
