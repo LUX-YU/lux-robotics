@@ -2,7 +2,7 @@
 // Created by ChenHui on 2023/4/28.
 //
 
-#include "lux/driver/camera/ImageSequence.hpp"
+#include <lux/robotics/driver/camera/ImageSequence.hpp>
 #include <string_view>
 
 namespace lux::robotics

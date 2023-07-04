@@ -1,7 +1,7 @@
 #pragma once
 #include <QMainWindow>
 #include <vector>
-#include <lux/driver/gps/GPSBase.hpp>
+#include <lux/robotics/driver/gps/GPSBase.hpp>
 
 namespace Ui {
     class MainWindow;

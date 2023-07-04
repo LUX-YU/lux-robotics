@@ -1,4 +1,4 @@
-#include "driver/camera/ZEDCamera.hpp"
+#include "lux/robotics/driver/camera/ZEDCamera.hpp"
 
 namespace lux::robotics
 {

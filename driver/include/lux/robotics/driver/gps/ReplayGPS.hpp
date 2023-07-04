@@ -1,6 +1,6 @@
 #pragma once
 #include <lux/robotics/visibility.h>
-#include <lux/driver/gps/GPSBase.hpp>
+#include <lux/robotics/driver/gps/GPSBase.hpp>
 #include <vector>
 #include <memory>
 

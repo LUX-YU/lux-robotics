@@ -1,4 +1,4 @@
-#include "lux/driver/camera/VideoRecorder.hpp"
+#include "lux/robotics/driver/camera/VideoRecorder.hpp"
 
 namespace lux::robotics
 {

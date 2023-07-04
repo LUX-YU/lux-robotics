@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include <lux/driver/camera/VideoCapture.hpp>
+#include <lux/robotics/driver/camera/VideoCapture.hpp>
 #include <lux/robotics/visibility.h>
 #include "ImageSequence.hpp"
 

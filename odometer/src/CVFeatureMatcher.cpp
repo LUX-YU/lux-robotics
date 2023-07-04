@@ -1,4 +1,4 @@
-#include "lux/odometer/CVFeatureMatcher.hpp"
+#include "lux/robotics/odometer/CVFeatureMatcher.hpp"
 
 CVFeatureMatcher::CVFeatureMatcher(cv::Ptr<cv::FeatureDetector> detector, cv::Ptr<cv::DescriptorMatcher> matcher)
 	: _detector(std::move(detector)), _matcher(std::move(matcher))

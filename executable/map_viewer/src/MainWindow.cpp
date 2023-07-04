@@ -28,7 +28,7 @@
 #include "QFileDialog"
 
 // dataset parser
-#include <lux/dataset/KITTI.hpp>
+#include <lux/dataset/kitti/KITTI.hpp>
 
 MainWindow::MainWindow(QWidget* parent)
 : QMainWindow(parent), _ui(new Ui::MainWindow{})

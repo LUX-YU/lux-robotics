@@ -1,4 +1,4 @@
-#include <lux/driver/camera/ImageSequenceCapture.hpp>
+#include <lux/robotics/driver/camera/ImageSequenceCapture.hpp>
 #include <thread>
 #include <atomic>
 #include <mutex>

@@ -1,4 +1,4 @@
-#include "lux/odometer/EpipolarGeometry.hpp"
+#include "lux/robotics//odometer/EpipolarGeometry.hpp"
 #include <opencv2/opencv.hpp>
 
 EpipolarGeometry::EpipolarGeometry(

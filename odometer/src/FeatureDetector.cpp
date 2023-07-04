@@ -1,2 +1,2 @@
-#include <lux/odometer/FeatureDetector.hpp>
+#include <lux/robotics//odometer/FeatureDetector.hpp>
 

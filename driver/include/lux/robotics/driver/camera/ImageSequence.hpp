@@ -9,7 +9,7 @@
 #include <filesystem>
 #include <functional>
 #include <lux/robotics/visibility.h>
-#include <lux/driver/camera/CameraBase.hpp>
+#include <lux/robotics/driver/camera/CameraBase.hpp>
 
 namespace lux::robotics
 {

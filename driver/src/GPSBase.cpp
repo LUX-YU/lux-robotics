@@ -1,4 +1,4 @@
-#include <lux/driver/gps/GPSBase.hpp>
+#include <lux/robotics/driver/gps/GPSBase.hpp>
 
 namespace lux::robotics
 {

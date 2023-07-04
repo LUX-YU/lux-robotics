@@ -1,4 +1,4 @@
-#include <lux/driver/gps/ReplayGPS.hpp>
+#include <lux/robotics/driver/gps/ReplayGPS.hpp>
 #include <mutex>
 #include <thread>
 #include <atomic>
